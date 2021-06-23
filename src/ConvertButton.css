@@ -1,0 +1,10 @@
+.currency-converter-convert-button {
+    width: 100px;
+    height: 40px;
+    background-color: dodgerblue;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+    border-radius: 5px;
+    border: 0;
+}

@@ -1,0 +1,13 @@
+.currency-converter-select {
+    width: 250px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+    font-size: medium;
+}
+
+.currency-converter-select:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(84, 212, 205, .7);
+}
