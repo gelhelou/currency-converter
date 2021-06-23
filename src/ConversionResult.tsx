@@ -1,6 +1,7 @@
 import React from "react";
 import "./ConversionResult.css";
 import { currencies } from "./utils/currencies";
+import { formatMoney } from "./utils/formatters";
 
 interface Props {
   from: string;
@@ -16,6 +17,8 @@ export const ConversionResult: React.FC<Props> = ({
   result,
 }) => (
   <div className="currency-converter-conversion-result">
-    {`${amount} ${currencies[from]} = ${result} ${currencies[to]}`}{" "}
+    {`${formatMoney(amount)} ${currencies[from]} = ${formatMoney(result)} ${
+      currencies[to]
+    }`}{" "}
   </div>
 );

@@ -21,8 +21,8 @@ export const CurrencySelect: React.FC<Props> = ({
       onChange={setFieldValue}
       value={currency}
     >
-      {Object.keys(currencies).map((symbol) => (
-        <option value={symbol}>{`${symbol} - ${formatCurrencyLabel(
+      {Object.keys(currencies).map((symbol, i) => (
+        <option key={i} value={symbol}>{`${symbol} - ${formatCurrencyLabel(
           currencies[symbol]
         )}`}</option>
       ))}

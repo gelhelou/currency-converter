@@ -7,11 +7,6 @@ interface ExchangeRatesSuccessResponse {
   rates: Record<string, number>;
 }
 
-interface ExchangeRatesErrorResponse {
-  code: string;
-  message: string;
-}
-
 export const getExchangeRatesForCurrency = (
   fromCurrency: string,
   toCurrencies: string[]

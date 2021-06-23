@@ -1,5 +1,5 @@
-export const formatAmount = (amount?: number): string => {
-  return amount ? amount.toFixed(2) : "";
+export const formatMoney = (amount?: number): string => {
+  return String(amount?.toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
 export const formatCurrencyLabel = (label: string): string =>

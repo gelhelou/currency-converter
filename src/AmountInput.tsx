@@ -9,7 +9,6 @@ interface Props {
 export const AmountInput: React.FC<Props> = ({ amount, setFieldValue }) => (
   <input
     className="currency-converter-amount-input"
-    type="number"
     id="amount"
     value={amount}
     onChange={setFieldValue}
