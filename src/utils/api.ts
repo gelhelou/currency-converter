@@ -1,6 +1,6 @@
 import { EXCHANGE_RATES_API_KEY } from "./keys";
 
-const API_BASE = "http://api.exchangeratesapi.io/v1/latest";
+const API_BASE = "http://api.exchangeratesapi.io/v1";
 
 interface ExchangeRatesSuccessResponse {
   success: boolean;
@@ -9,10 +9,11 @@ interface ExchangeRatesSuccessResponse {
 
 export const getExchangeRatesForCurrency = (
   fromCurrency: string,
-  toCurrencies: string[]
+  toCurrencies: string[],
+  date: string = "latest"
 ): Promise<ExchangeRatesSuccessResponse> => {
   return fetch(
-    `${API_BASE}?access_key=${EXCHANGE_RATES_API_KEY}&base=${fromCurrency}&symbols=${toCurrencies.join(
+    `${API_BASE}/${date}?access_key=${EXCHANGE_RATES_API_KEY}&base=${fromCurrency}&symbols=${toCurrencies.join(
       ","
     )}`
   )

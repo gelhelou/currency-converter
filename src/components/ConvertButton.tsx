@@ -1,7 +1,7 @@
 import React from "react";
-import "./ConvertButton.css";
+import "../styles/ConvertButton.css";
 
-interface Props {
+export interface Props {
   convert: () => void;
 }
 

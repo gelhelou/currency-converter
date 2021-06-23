@@ -1,7 +1,7 @@
 import React from "react";
-import "./CurrencySelect.css";
-import { currencies } from "./utils/currencies";
-import { formatCurrencyLabel } from "./utils/formatters";
+import "../styles/CurrencySelect.css";
+import { currencies } from "../utils/currencies";
+import { capitalize, formatCurrencyLabel } from "../utils/formatters";
 
 interface Props {
   selectId: string;
@@ -11,6 +11,7 @@ interface Props {
     event: React.ChangeEvent<HTMLSelectElement>,
     position?: number
   ) => void;
+  label?: string;
 }
 
 export const CurrencySelect: React.FC<Props> = ({
@@ -18,8 +19,10 @@ export const CurrencySelect: React.FC<Props> = ({
   selectId,
   setFieldValue,
   position,
+  label,
 }) => (
-  <div className="currency-converter-select">
+  <div className="currency-converter-select-form">
+    {label && <label htmlFor={label}>{capitalize(label)}</label>}
     <select
       className="currency-converter-select"
       id={selectId}

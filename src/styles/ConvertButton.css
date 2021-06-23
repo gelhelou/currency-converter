@@ -1,0 +1,15 @@
+.currency-converter-convert-button {
+    width: 100px;
+    height: 40px;
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    background-color: dodgerblue;
+    align-self: flex-end;
+}
+
+.currency-converter-convert-button:hover {
+    cursor: pointer;
+}

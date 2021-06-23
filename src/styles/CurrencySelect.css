@@ -1,0 +1,26 @@
+.currency-converter-select-form {
+    width: 250px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.currency-converter-select-form label {
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+.currency-converter-select {
+    width: 250px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+    font-size: medium;
+}
+
+.currency-converter-select:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px dodgerblue;
+}

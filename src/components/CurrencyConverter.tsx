@@ -1,11 +1,13 @@
 import React from "react";
-import "./CurrencyConverter.css";
+import { DatePicker } from "react-rainbow-components";
+import "../styles/CurrencyConverter.css";
 import { AmountInput } from "./AmountInput";
 import { ConversionResult } from "./ConversionResult";
 import { ConvertButton } from "./ConvertButton";
 import { CurrencySelect } from "./CurrencySelect";
-import { getExchangeRatesForCurrency } from "./utils/api";
-import { currencies } from "./utils/currencies";
+import { getExchangeRatesForCurrency } from "../utils/api";
+import { currencies } from "../utils/currencies";
+import swapIcon from "../icons/swap-icon.jpeg";
 
 const MAX_CONVERSIONS = 5;
 
@@ -20,7 +22,8 @@ interface State {
   amount: number;
   currencyFrom: string;
   currenciesTo: string[];
-  conversion: Conversion[];
+  conversions: Conversion[];
+  date: Date | null;
 }
 
 class CurrencyConverter extends React.Component<{}, State> {
@@ -28,7 +31,8 @@ class CurrencyConverter extends React.Component<{}, State> {
     amount: 1,
     currencyFrom: "EUR",
     currenciesTo: ["USD"],
-    conversion: [],
+    conversions: [],
+    date: new Date(),
   };
 
   setFieldValue = (
@@ -43,7 +47,7 @@ class CurrencyConverter extends React.Component<{}, State> {
     } else if (id === "currencyFrom") {
       this.setState({ currencyFrom: value });
     } else if (id === "currenciesTo") {
-      if (position) {
+      if (position !== undefined) {
         const { currenciesTo } = this.state;
         currenciesTo[position] = value;
         this.setState({ currenciesTo });
@@ -52,24 +56,30 @@ class CurrencyConverter extends React.Component<{}, State> {
     this.reset();
   };
 
+  setDate = (date: Date): void => {
+    this.setState({ date });
+    this.reset();
+  };
+
   reset = (): void => {
-    this.setState({ conversion: [] });
+    this.setState({ conversions: [] });
   };
 
   calculate = (rate: number, amount?: number) => (amount ? amount : 0) * rate;
 
   convert = async (): Promise<void> => {
-    const { amount, currencyFrom, currenciesTo } = this.state;
-    getExchangeRatesForCurrency(currencyFrom, currenciesTo)
+    const { amount, currencyFrom, currenciesTo, date } = this.state;
+    const targetDate = date?.toISOString().substring(0, 10);
+    getExchangeRatesForCurrency(currencyFrom, currenciesTo, targetDate)
       .then((data) => {
         if (data.success) {
-          const conversion = Object.keys(data.rates).map((symbol) => ({
+          const conversions = Object.keys(data.rates).map((symbol) => ({
             from: currencyFrom,
             amount,
             to: symbol,
             result: this.calculate(data.rates[symbol], amount),
           }));
-          this.setState({ conversion });
+          this.setState({ conversions });
         }
       })
       .catch((e) => {
@@ -92,49 +102,81 @@ class CurrencyConverter extends React.Component<{}, State> {
     this.setState({ currenciesTo });
   };
 
+  swap = (): void => {
+    let { currencyFrom, currenciesTo } = this.state;
+    const temp = currenciesTo[0];
+    currenciesTo[0] = currencyFrom;
+    currencyFrom = temp;
+    this.setState({ currencyFrom, currenciesTo });
+  };
+
   render() {
     return (
       <div className="currency-converter">
-        <div className="conversion-converter-block">
-          <div className="currency-converter-upper">
+        <div className="currency-converter-date-picker-wrapper">
+          <DatePicker
+            onChange={this.setDate}
+            value={this.state.date ?? new Date()}
+            formatStyle="large"
+            label="Conversion Day"
+            labelAlignment="left"
+            maxDate={new Date()}
+            minDate={new Date("1999-01-01")}
+          />
+        </div>
+        <div className="currency-converter-body">
+          <div className="currency-converter-source">
             <AmountInput
               amount={this.state.amount}
               setFieldValue={this.setFieldValue}
+              label="amount"
             />
             <CurrencySelect
               position={-1}
               selectId={"currencyFrom"}
               currency={this.state.currencyFrom}
               setFieldValue={this.setFieldValue}
+              label="from"
             />
-            <CurrencySelect
-              position={0}
-              selectId={"currenciesTo"}
-              currency={this.state.currenciesTo[0]}
-              setFieldValue={this.setFieldValue}
+            <img
+              src={swapIcon}
+              className="currency-converter-swap-icon"
+              onClick={this.swap}
+              alt="swap-icon"
             />
-            <button
-              className="currency-converter-button"
-              onClick={this.addConversion}
-              disabled={this.state.currenciesTo.length >= MAX_CONVERSIONS}
-            >
-              Add
-            </button>
           </div>
-          <div className="currency-converter-other-conversions">
-            {this.state.currenciesTo.slice(1).map((currency, i) => (
-              <div key={i} className="currency-converter-other-conversion-to">
+          <div className="currency-converter-target">
+            {this.state.currenciesTo.map((currency, i) => (
+              <div
+                className={
+                  i === 0
+                    ? "currency-converter-target-main"
+                    : "currency-converter-target-other"
+                }
+              >
                 <CurrencySelect
-                  position={i + 1}
+                  position={i}
                   selectId={"currenciesTo"}
                   currency={currency}
                   setFieldValue={this.setFieldValue}
+                  label={i === 0 ? "to" : ""}
                 />
                 <button
-                  className="currency-converter-button"
-                  onClick={() => this.removeConversion(i + 1)}
+                  className={
+                    i === 0
+                      ? "currency-converter-add-button"
+                      : "currency-converter-remove-button"
+                  }
+                  onClick={() =>
+                    i === 0 ? this.addConversion() : this.removeConversion(i)
+                  }
+                  disabled={
+                    i === 0
+                      ? this.state.currenciesTo.length >= MAX_CONVERSIONS
+                      : false
+                  }
                 >
-                  Remove
+                  {i === 0 ? "Add" : "Remove"}
                 </button>
               </div>
             ))}
@@ -144,7 +186,7 @@ class CurrencyConverter extends React.Component<{}, State> {
           <ConvertButton convert={this.convert} />
         </div>
         <div className="currency-converter-result">
-          {this.state.conversion.map((c, i) => (
+          {this.state.conversions.map((c, i) => (
             <ConversionResult key={i} {...c} />
           ))}
         </div>
