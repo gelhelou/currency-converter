@@ -6,19 +6,24 @@ import { formatCurrencyLabel } from "./utils/formatters";
 interface Props {
   selectId: string;
   currency: string;
-  setFieldValue: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  position: number;
+  setFieldValue: (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    position?: number
+  ) => void;
 }
 
 export const CurrencySelect: React.FC<Props> = ({
   currency,
   selectId,
   setFieldValue,
+  position,
 }) => (
   <div className="currency-converter-select">
     <select
       className="currency-converter-select"
       id={selectId}
-      onChange={setFieldValue}
+      onChange={(e) => setFieldValue(e, position)}
       value={currency}
     >
       {Object.keys(currencies).map((symbol, i) => (
