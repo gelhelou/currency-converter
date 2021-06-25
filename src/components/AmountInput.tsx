@@ -1,10 +1,11 @@
 import React from "react";
 import "../styles/AmountInput.css";
 import { capitalize } from "../utils/formatters";
+import { CombinedEvent } from "./CurrencyConverter";
 
 export interface Props {
   amount?: number;
-  setFieldValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setFieldValue: (event: CombinedEvent) => void;
   label: string;
 }
 

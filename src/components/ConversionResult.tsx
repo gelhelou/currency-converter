@@ -3,7 +3,7 @@ import "../styles/ConversionResult.css";
 import { currencies } from "../utils/currencies";
 import { formatMoney } from "../utils/formatters";
 
-interface Props {
+export interface Props {
   from: string;
   amount: number;
   to: string;
@@ -19,6 +19,6 @@ export const ConversionResult: React.FC<Props> = ({
   <div className="currency-converter-conversion-result">
     {`${formatMoney(amount)} ${currencies[from]} = ${formatMoney(result, 2)} ${
       currencies[to]
-    }`}{" "}
+    }`}
   </div>
 );

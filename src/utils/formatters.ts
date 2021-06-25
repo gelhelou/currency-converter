@@ -13,3 +13,6 @@ export const formatCurrencyLabel = (label: string): string =>
 
 export const capitalize = (input?: string) =>
   input ? input.charAt(0).toUpperCase() + input.slice(1) : "";
+
+export const formatDate = (date: Date) =>
+  new Date(date.toLocaleDateString().substring(0, 10));

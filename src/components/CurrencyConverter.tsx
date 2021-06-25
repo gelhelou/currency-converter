@@ -1,6 +1,7 @@
 import React from "react";
 import { DatePicker } from "react-rainbow-components";
 import "../styles/CurrencyConverter.css";
+import { formatDate } from "../utils/formatters";
 import { AmountInput } from "./AmountInput";
 import { ConversionResult } from "./ConversionResult";
 import { ConvertButton } from "./ConvertButton";
@@ -9,7 +10,7 @@ import { getExchangeRatesForCurrency } from "../utils/api";
 import { currencies } from "../utils/currencies";
 import swapIcon from "../icons/swap-icon.jpeg";
 
-const MAX_CONVERSIONS = 5;
+export const MAX_CONVERSIONS = 5;
 
 interface Conversion {
   from: string;
@@ -23,8 +24,12 @@ interface State {
   currencyFrom: string;
   currenciesTo: string[];
   conversions: Conversion[];
-  date: Date | null;
+  date: Date;
 }
+
+export type CombinedEvent = React.ChangeEvent<
+  HTMLInputElement | HTMLSelectElement
+> & { position?: number };
 
 class CurrencyConverter extends React.Component<{}, State> {
   state: State = {
@@ -35,23 +40,23 @@ class CurrencyConverter extends React.Component<{}, State> {
     date: new Date(),
   };
 
-  setFieldValue = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    position?: number
-  ): void => {
+  setFieldValue = (event: CombinedEvent): void => {
     const {
       target: { id, value },
+      position = -1,
     } = event;
-    if (id === "amount") {
-      this.setState({ amount: Number(value) });
-    } else if (id === "currencyFrom") {
-      this.setState({ currencyFrom: value });
-    } else if (id === "currenciesTo") {
-      if (position !== undefined) {
+    switch (id) {
+      case "amount":
+        this.setState({ amount: Number(value) });
+        break;
+      case "currencyFrom":
+        this.setState({ currencyFrom: value });
+        break;
+      case "currenciesTo":
         const { currenciesTo } = this.state;
         currenciesTo[position] = value;
         this.setState({ currenciesTo });
-      }
+        break;
     }
     this.reset();
   };
@@ -65,33 +70,28 @@ class CurrencyConverter extends React.Component<{}, State> {
     this.setState({ conversions: [] });
   };
 
-  calculate = (rate: number, amount?: number) => (amount ? amount : 0) * rate;
+  calculate = (rate: number, amount: number) => amount * rate;
 
   convert = async (): Promise<void> => {
     const { amount, currencyFrom, currenciesTo, date } = this.state;
     const targetDate = date?.toISOString().substring(0, 10);
     getExchangeRatesForCurrency(currencyFrom, currenciesTo, targetDate)
       .then((data) => {
-        if (data.success) {
-          const conversions = Object.keys(data.rates).map((symbol) => ({
-            from: currencyFrom,
-            amount,
-            to: symbol,
-            result: this.calculate(data.rates[symbol], amount),
-          }));
-          this.setState({ conversions });
-        }
+        const conversions = Object.keys(data.rates).map((symbol) => ({
+          from: currencyFrom,
+          amount,
+          to: symbol,
+          result: this.calculate(data.rates[symbol], amount),
+        }));
+        this.setState({ conversions });
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.warn(`Unable to fetch data due to ${error}`);
       });
   };
 
   addConversion = (): void => {
     const { currenciesTo } = this.state;
-    if (currenciesTo.length >= MAX_CONVERSIONS) {
-      return;
-    }
     currenciesTo.push(Object.keys(currencies)[0]);
     this.setState({ currenciesTo });
   };
@@ -116,12 +116,12 @@ class CurrencyConverter extends React.Component<{}, State> {
         <div className="currency-converter-date-picker-wrapper">
           <DatePicker
             onChange={this.setDate}
-            value={this.state.date ?? new Date()}
+            value={formatDate(this.state.date)}
             formatStyle="large"
             label="Conversion Day"
             labelAlignment="left"
-            maxDate={new Date()}
-            minDate={new Date("1999-01-01")}
+            maxDate={formatDate(new Date())}
+            minDate={formatDate(new Date("1999-01-01"))}
           />
         </div>
         <div className="currency-converter-body">
@@ -148,6 +148,7 @@ class CurrencyConverter extends React.Component<{}, State> {
           <div className="currency-converter-target">
             {this.state.currenciesTo.map((currency, i) => (
               <div
+                key={i}
                 className={
                   i === 0
                     ? "currency-converter-target-main"
