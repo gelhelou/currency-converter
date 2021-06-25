@@ -1,8 +1,8 @@
 .currency-converter {
-    width: 100%;
+    width: 70%;
     height: auto;
     padding: 50px 0;
-    background-color: lightpink;
+    background-color: limegreen;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,7 +49,14 @@
 .currency-converter-date-picker-wrapper {
     width: 40%;
     margin-bottom: 20px;
-    /*margin-top: 50px;*/
+}
+
+.currency-converter-date-picker-wrapper label {
+    align-self: flex-start;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: medium;
+    color: blueviolet;
 }
 
 .currency-converter-action {
@@ -57,8 +64,9 @@
 }
 
 .currency-converter-result {
+    width: 90%;
     margin-top: 20px;
-    text-align: left;
+    text-align: center;
 }
 
 .currency-converter-add-button,
@@ -71,7 +79,7 @@
     font-weight: bold;
     border: 0;
     border-radius: 5px;
-    background-color: dodgerblue;
+    background-color: blueviolet;
     align-self: flex-end;
 }
 
@@ -110,5 +118,11 @@
     }
     .currency-converter-swap-icon {
         margin: 0;
+    }
+}
+
+@media all and (max-device-width: 660px) {
+    .currency-converter {
+        width: 100%;
     }
 }

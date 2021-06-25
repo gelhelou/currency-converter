@@ -8,7 +8,7 @@ import { ConvertButton } from "./ConvertButton";
 import { CurrencySelect } from "./CurrencySelect";
 import { getExchangeRatesForCurrency } from "../utils/api";
 import { currencies } from "../utils/currencies";
-import swapIcon from "../icons/swap-icon.jpeg";
+import swapIcon from "../icons/swap-icon.png";
 
 export const MAX_CONVERSIONS = 5;
 
@@ -118,7 +118,7 @@ class CurrencyConverter extends React.Component<{}, State> {
             onChange={this.setDate}
             value={formatDate(this.state.date)}
             formatStyle="large"
-            label="Conversion Day"
+            label={<label>Conversion Day</label>}
             labelAlignment="left"
             maxDate={formatDate(new Date())}
             minDate={formatDate(new Date("1999-01-01"))}
@@ -188,7 +188,7 @@ class CurrencyConverter extends React.Component<{}, State> {
         </div>
         <div className="currency-converter-result">
           {this.state.conversions.map((c, i) => (
-            <ConversionResult key={i} {...c} />
+            <ConversionResult key={i} {...c} position={i} />
           ))}
         </div>
       </div>

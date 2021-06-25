@@ -11,17 +11,20 @@ describe("ConversionResult", () => {
     to: "USD",
     result: 120,
   };
-  const element = () => <ConversionResult {...defaultProps} />;
+  const element = (props?: Partial<Props>) => (
+    <ConversionResult {...defaultProps} {...props} />
+  );
   it("should render the correct conversion result", () => {
-    const { getByText } = render(element());
-    expect(
-      getByText(
-        `${formatMoney(defaultProps.amount)} ${
-          currencies[defaultProps.from]
-        } = ${formatMoney(defaultProps.result, 2)} ${
-          currencies[defaultProps.to]
-        }`
-      )
-    ).toBeInTheDocument();
+    const { getByText, rerender } = render(element());
+    const result = getByText(
+      `${formatMoney(defaultProps.amount)} ${
+        currencies[defaultProps.from]
+      } = ${formatMoney(defaultProps.result, 2)} ${currencies[defaultProps.to]}`
+    );
+    expect(result).toBeInTheDocument();
+    expect(result).toHaveStyle("color: blueviolet");
+
+    rerender(element({ position: 1 }));
+    expect(result).toHaveStyle("color: white");
   });
 });

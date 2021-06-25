@@ -9,6 +9,9 @@
 .currency-converter-select-form label {
     align-self: flex-start;
     margin-bottom: 5px;
+    font-weight: bold;
+    font-size: medium;
+    color: blueviolet;
 }
 
 .currency-converter-select {
