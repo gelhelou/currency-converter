@@ -7,6 +7,7 @@ jest.mock("./CurrencyConverter", () => jest.fn(() => "[CurrencyConverter]"));
 describe("App", () => {
   const { getByText } = render(<App />);
   it("should render a currency converter", () => {
+    expect(getByText("The Exchanger")).toBeInTheDocument();
     expect(getByText("[CurrencyConverter]")).toBeInTheDocument();
   });
 });
