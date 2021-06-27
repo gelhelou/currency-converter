@@ -1,5 +1,6 @@
 import React from "react"
 import { DatePicker } from "react-rainbow-components"
+import { ClipLoader } from "react-spinners"
 
 import { AmountInput } from "./AmountInput"
 import { ConversionResult } from "./ConversionResult"
@@ -26,6 +27,7 @@ interface State {
   currenciesTo: string[]
   conversions: Conversion[]
   date: Date
+  loading: boolean
 }
 
 export type CombinedEvent = React.ChangeEvent<
@@ -39,6 +41,7 @@ class CurrencyConverter extends React.Component<{}, State> {
     currenciesTo: ["USD"],
     conversions: [],
     date: new Date(),
+    loading: false,
   }
 
   setFieldValue = (event: CombinedEvent): void => {
@@ -79,6 +82,7 @@ class CurrencyConverter extends React.Component<{}, State> {
   calculate = (rate: number, amount: number) => amount * rate
 
   convert = async (): Promise<void> => {
+    this.setState({ loading: true })
     const { amount, currencyFrom, currenciesTo, date } = this.state
     const targetDate = date?.toISOString().substring(0, 10)
     getExchangeRatesForCurrency(currencyFrom, currenciesTo, targetDate)
@@ -89,7 +93,7 @@ class CurrencyConverter extends React.Component<{}, State> {
           to: symbol,
           result: this.calculate(data.rates[symbol], amount),
         }))
-        this.setState({ conversions })
+        this.setState({ conversions, loading: false })
       })
       .catch((error) => {
         console.warn(`Unable to fetch data due to ${error}`)
@@ -191,6 +195,7 @@ class CurrencyConverter extends React.Component<{}, State> {
         </div>
         <div className="currency-converter-action">
           <ConvertButton convert={this.convert} />
+          {this.state.loading && <ClipLoader color="blueviolet" size={25} />}
         </div>
         <div className="currency-converter-result">
           {this.state.conversions.map((c, i) => (
