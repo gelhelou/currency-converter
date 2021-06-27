@@ -4,6 +4,7 @@
   width: 70%;
   height: auto;
   padding: 50px 0;
+  box-sizing: border-box;
   background-color: $base-foreground-color;
   border: 5px outset $base-secondary-color;
   display: flex;

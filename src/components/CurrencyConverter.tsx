@@ -6,7 +6,7 @@ import { ConversionResult } from "./ConversionResult"
 import { ConvertButton } from "./ConvertButton"
 import { CurrencySelect } from "./CurrencySelect"
 
-import swapIcon from "../icons/swap-icon.png"
+import swapIcon from "../images/swap-icon.png"
 import { getExchangeRatesForCurrency } from "../utils/api"
 import { currencies } from "../utils/currencies"
 import { formatDate } from "../utils/formatters"
