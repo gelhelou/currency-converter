@@ -1,5 +1,5 @@
 import React from "react"
-import "../styles/ConversionResult.scss"
+
 import { currencies } from "../utils/currencies"
 import { formatMoney } from "../utils/formatters"
 

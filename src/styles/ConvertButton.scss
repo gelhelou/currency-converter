@@ -1,17 +1,17 @@
 @import "theme";
 
 .currency-converter-convert-button {
-    width: 100px;
-    height: 40px;
-    color: $button-text-color;
-    font-size: $base-font-size;
-    font-weight: bold;
-    border: 0;
-    border-radius: $base-border-radius;
-    background-color: $base-secondary-color;
-    align-self: flex-end;
+  width: 100px;
+  height: 40px;
+  color: $button-text-color;
+  font-size: $base-font-size;
+  font-weight: bold;
+  border: 0;
+  border-radius: $base-border-radius;
+  background-color: $base-secondary-color;
+  align-self: flex-end;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }

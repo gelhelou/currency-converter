@@ -1,14 +1,15 @@
 import React from "react"
 import { DatePicker } from "react-rainbow-components"
-import "../styles/CurrencyConverter.scss"
-import { formatDate } from "../utils/formatters"
+
 import { AmountInput } from "./AmountInput"
 import { ConversionResult } from "./ConversionResult"
 import { ConvertButton } from "./ConvertButton"
 import { CurrencySelect } from "./CurrencySelect"
+
+import swapIcon from "../icons/swap-icon.png"
 import { getExchangeRatesForCurrency } from "../utils/api"
 import { currencies } from "../utils/currencies"
-import swapIcon from "../icons/swap-icon.png"
+import { formatDate } from "../utils/formatters"
 
 export const MAX_CONVERSIONS = 5
 

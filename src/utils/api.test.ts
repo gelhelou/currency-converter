@@ -1,5 +1,6 @@
 import axios from "axios"
 import { mocked } from "ts-jest/utils"
+
 import { getExchangeRatesForCurrency } from "./api"
 
 jest.mock("axios")

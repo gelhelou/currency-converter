@@ -1,133 +1,137 @@
 @import "theme";
 
 .currency-converter {
-    width: 70%;
+  width: 70%;
+  height: auto;
+  padding: 50px 0;
+  background-color: $base-foreground-color;
+  border: 5px outset $base-secondary-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &-body {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &-source {
     height: auto;
-    padding: 50px 0;
-    background-color: $base-foreground-color;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 50px;
+
+    .currency-converter-dropdown-form {
+      margin-bottom: 20px;
+    }
+  }
+
+  &-target {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 0 50px;
 
-    &-body {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+    &-main {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
     }
 
-    &-source {
-        height: auto;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding: 0 50px;
+    &-other {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+    }
+  }
 
-        .currency-converter-dropdown-form {
-            margin-bottom: 20px;
-        }
+  &-date-picker-wrapper {
+    width: 40%;
+    margin-bottom: 20px;
+
+    label {
+      align-self: flex-start;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: $base-font-size;
+      color: $base-secondary-color;
+    }
+  }
+
+  &-action {
+    margin-top: 20px;
+  }
+
+  &-result {
+    width: 90%;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  &-add-button,
+  &-remove-button {
+    width: 75px;
+    height: 30px;
+    margin-left: 20px;
+    color: $button-text-color;
+    font-size: $small-font-size;
+    font-weight: bold;
+    border: 0;
+    border-radius: $base-border-radius;
+    background-color: $base-secondary-color;
+    align-self: flex-end;
+
+    &:hover {
+      cursor: pointer;
     }
 
-    &-target {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        padding: 0 50px;
-
-        &-main {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-        }
-
-        &-other {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-        }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
+  }
 
-    &-date-picker-wrapper {
-        width: 40%;
-        margin-bottom: 20px;
+  &-swap-icon {
+    width: 40px;
+    height: 40px;
+    margin: 25px 0 0 40px;
+    align-self: flex-start;
 
-        label {
-            align-self: flex-start;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: $base-font-size;
-            color: $base-secondary-color;
-        }
+    &:hover {
+      cursor: pointer;
     }
-
-    &-action {
-        margin-top: 20px;
-    }
-
-    &-result {
-        width: 90%;
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    &-add-button, &-remove-button {
-        width: 75px;
-        height: 30px;
-        margin-left: 20px;
-        color: $button-text-color;
-        font-size: $small-font-size;
-        font-weight: bold;
-        border: 0;
-        border-radius: $base-border-radius;
-        background-color: $base-secondary-color;
-        align-self: flex-end;
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        &:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    }
-
-    &-swap-icon {
-        width: 40px;
-        height: 40px;
-        margin: 25px 0 0 40px;
-        align-self: flex-start;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
+  }
 }
 
 @media all and (max-device-width: 600px) {
-    .currency-converter {
-        &-target {
-            &-main, &-other {
-                flex-direction: column;
-            }
-        }
-
-        &-add-button, &-remove-button {
-            margin-top: 10px;
-        }
-
-        &-date-picker-wrapper {
-            width: 60%;
-        }
-
-        &-swap-icon {
-            margin: 0;
-        }
+  .currency-converter {
+    &-target {
+      &-main,
+      &-other {
+        flex-direction: column;
+      }
     }
+
+    &-add-button,
+    &-remove-button {
+      margin-top: 10px;
+    }
+
+    &-date-picker-wrapper {
+      width: 60%;
+    }
+
+    &-swap-icon {
+      margin: 0;
+    }
+  }
 }
 
 @media all and (max-device-width: 660px) {
-    .currency-converter {
-        width: 100%;
-    }
+  .currency-converter {
+    width: 100%;
+  }
 }

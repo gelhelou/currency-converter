@@ -1,5 +1,4 @@
 import React from "react"
-import "../styles/ConvertButton.scss"
 
 export interface Props {
   convert: () => void

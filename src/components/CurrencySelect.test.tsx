@@ -1,10 +1,6 @@
 import React from "react"
-import {
-  getByLabelText,
-  render,
-  fireEvent,
-  screen,
-} from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
+
 import { CurrencySelect, Props } from "./CurrencySelect"
 import { capitalize } from "../utils/formatters"
 

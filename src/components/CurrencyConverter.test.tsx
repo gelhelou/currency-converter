@@ -1,12 +1,12 @@
 import React from "react"
 import axios from "axios"
-
-import { render, fireEvent } from "@testing-library/react"
 import { mocked } from "ts-jest/utils"
-import { currencies } from "../utils/currencies"
-import { formatCurrencyLabel } from "../utils/formatters"
+import { render, fireEvent } from "@testing-library/react"
+
 import { ConversionResult } from "./ConversionResult"
 import CurrencyConverter from "./CurrencyConverter"
+import { formatCurrencyLabel } from "../utils/formatters"
+import { currencies } from "../utils/currencies"
 
 // Suppress logs
 console.warn = jest.fn()

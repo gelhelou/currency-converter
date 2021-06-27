@@ -1,8 +1,8 @@
 import React from "react"
-import "../styles/CurrencySelect.scss"
+
+import { CombinedEvent } from "./CurrencyConverter"
 import { currencies } from "../utils/currencies"
 import { capitalize, formatCurrencyLabel } from "../utils/formatters"
-import { CombinedEvent } from "./CurrencyConverter"
 
 export interface Props {
   selectId: string

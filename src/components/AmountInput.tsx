@@ -1,7 +1,7 @@
 import React from "react"
-import "../styles/AmountInput.scss"
-import { capitalize } from "../utils/formatters"
+
 import { CombinedEvent } from "./CurrencyConverter"
+import { capitalize } from "../utils/formatters"
 
 export interface Props {
   amount?: number

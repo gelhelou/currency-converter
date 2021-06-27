@@ -1,5 +1,6 @@
 import React from "react"
-import { render, fireEvent, getByText } from "@testing-library/react"
+import { fireEvent, render } from "@testing-library/react"
+
 import { ConvertButton, Props } from "./ConvertButton"
 
 const convertMock = jest.fn()
