@@ -1,26 +1,26 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { AmountInput, Props } from "./AmountInput";
+import React from "react"
+import { render, fireEvent } from "@testing-library/react"
+import { AmountInput, Props } from "./AmountInput"
 
-const setFieldValueMock = jest.fn();
+const setFieldValueMock = jest.fn()
 
 describe("AmountInput", () => {
   const defaultProps: Props = {
     amount: 100,
     setFieldValue: setFieldValueMock,
     label: "from",
-  };
-  const element = () => <AmountInput {...defaultProps} />;
+  }
+  const element = () => <AmountInput {...defaultProps} />
   it("should render a label and an input", () => {
-    const { getByText, getByLabelText, getByDisplayValue } = render(element());
+    const { getByText, getByLabelText, getByDisplayValue } = render(element())
 
-    expect(getByText("From")).toBeInTheDocument();
-    expect(getByDisplayValue("100")).toBeInTheDocument();
+    expect(getByText("From")).toBeInTheDocument()
+    expect(getByDisplayValue("100")).toBeInTheDocument()
 
-    const input = getByLabelText("From");
-    expect(input).toBeInTheDocument();
+    const input = getByLabelText("From")
+    expect(input).toBeInTheDocument()
 
-    fireEvent.change(input, { target: { value: 200 } });
-    expect(setFieldValueMock).toHaveBeenCalled();
-  });
-});
+    fireEvent.change(input, { target: { value: 200 } })
+    expect(setFieldValueMock).toHaveBeenCalled()
+  })
+})

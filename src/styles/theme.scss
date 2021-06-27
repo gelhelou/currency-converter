@@ -1,0 +1,15 @@
+$base-background-color: white;
+$base-foreground-color: limegreen;
+$base-secondary-color: blueviolet;
+$button-text-color: white;
+
+$small-font-size: small;
+$base-font-size: medium;
+$large-font-size: large;
+
+$base-border-radius: 5px;
+
+@mixin outline {
+  outline: 0;
+  box-shadow: 0 0 0 2px $base-secondary-color;
+}

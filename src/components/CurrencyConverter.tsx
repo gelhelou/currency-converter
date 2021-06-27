@@ -1,35 +1,35 @@
-import React from "react";
-import { DatePicker } from "react-rainbow-components";
-import "../styles/CurrencyConverter.css";
-import { formatDate } from "../utils/formatters";
-import { AmountInput } from "./AmountInput";
-import { ConversionResult } from "./ConversionResult";
-import { ConvertButton } from "./ConvertButton";
-import { CurrencySelect } from "./CurrencySelect";
-import { getExchangeRatesForCurrency } from "../utils/api";
-import { currencies } from "../utils/currencies";
-import swapIcon from "../icons/swap-icon.png";
+import React from "react"
+import { DatePicker } from "react-rainbow-components"
+import "../styles/CurrencyConverter.scss"
+import { formatDate } from "../utils/formatters"
+import { AmountInput } from "./AmountInput"
+import { ConversionResult } from "./ConversionResult"
+import { ConvertButton } from "./ConvertButton"
+import { CurrencySelect } from "./CurrencySelect"
+import { getExchangeRatesForCurrency } from "../utils/api"
+import { currencies } from "../utils/currencies"
+import swapIcon from "../icons/swap-icon.png"
 
-export const MAX_CONVERSIONS = 5;
+export const MAX_CONVERSIONS = 5
 
 interface Conversion {
-  from: string;
-  amount: number;
-  to: string;
-  result: number;
+  from: string
+  amount: number
+  to: string
+  result: number
 }
 
 interface State {
-  amount: number;
-  currencyFrom: string;
-  currenciesTo: string[];
-  conversions: Conversion[];
-  date: Date;
+  amount: number
+  currencyFrom: string
+  currenciesTo: string[]
+  conversions: Conversion[]
+  date: Date
 }
 
 export type CombinedEvent = React.ChangeEvent<
   HTMLInputElement | HTMLSelectElement
-> & { position?: number };
+> & { position?: number }
 
 class CurrencyConverter extends React.Component<{}, State> {
   state: State = {
@@ -38,43 +38,48 @@ class CurrencyConverter extends React.Component<{}, State> {
     currenciesTo: ["USD"],
     conversions: [],
     date: new Date(),
-  };
+  }
 
   setFieldValue = (event: CombinedEvent): void => {
     const {
       target: { id, value },
       position = -1,
-    } = event;
+    } = event
     switch (id) {
       case "amount":
-        this.setState({ amount: Number(value) });
-        break;
+        this.setState({
+          amount:
+            value.match(/^[0-9]+$/) || value === ""
+              ? Number(value)
+              : this.state.amount,
+        })
+        break
       case "currencyFrom":
-        this.setState({ currencyFrom: value });
-        break;
+        this.setState({ currencyFrom: value })
+        break
       case "currenciesTo":
-        const { currenciesTo } = this.state;
-        currenciesTo[position] = value;
-        this.setState({ currenciesTo });
-        break;
+        const { currenciesTo } = this.state
+        currenciesTo[position] = value
+        this.setState({ currenciesTo })
+        break
     }
-    this.reset();
-  };
+    this.reset()
+  }
 
   setDate = (date: Date): void => {
-    this.setState({ date });
-    this.reset();
-  };
+    this.setState({ date })
+    this.reset()
+  }
 
   reset = (): void => {
-    this.setState({ conversions: [] });
-  };
+    this.setState({ conversions: [] })
+  }
 
-  calculate = (rate: number, amount: number) => amount * rate;
+  calculate = (rate: number, amount: number) => amount * rate
 
   convert = async (): Promise<void> => {
-    const { amount, currencyFrom, currenciesTo, date } = this.state;
-    const targetDate = date?.toISOString().substring(0, 10);
+    const { amount, currencyFrom, currenciesTo, date } = this.state
+    const targetDate = date?.toISOString().substring(0, 10)
     getExchangeRatesForCurrency(currencyFrom, currenciesTo, targetDate)
       .then((data) => {
         const conversions = Object.keys(data.rates).map((symbol) => ({
@@ -82,33 +87,33 @@ class CurrencyConverter extends React.Component<{}, State> {
           amount,
           to: symbol,
           result: this.calculate(data.rates[symbol], amount),
-        }));
-        this.setState({ conversions });
+        }))
+        this.setState({ conversions })
       })
       .catch((error) => {
-        console.warn(`Unable to fetch data due to ${error}`);
-      });
-  };
+        console.warn(`Unable to fetch data due to ${error}`)
+      })
+  }
 
   addConversion = (): void => {
-    const { currenciesTo } = this.state;
-    currenciesTo.push(Object.keys(currencies)[0]);
-    this.setState({ currenciesTo });
-  };
+    const { currenciesTo } = this.state
+    currenciesTo.push(Object.keys(currencies)[0])
+    this.setState({ currenciesTo })
+  }
 
   removeConversion = (position: number): void => {
-    const { currenciesTo } = this.state;
-    currenciesTo.splice(position, 1);
-    this.setState({ currenciesTo });
-  };
+    const { currenciesTo } = this.state
+    currenciesTo.splice(position, 1)
+    this.setState({ currenciesTo })
+  }
 
   swap = (): void => {
-    let { currencyFrom, currenciesTo } = this.state;
-    const temp = currenciesTo[0];
-    currenciesTo[0] = currencyFrom;
-    currencyFrom = temp;
-    this.setState({ currencyFrom, currenciesTo });
-  };
+    let { currencyFrom, currenciesTo } = this.state
+    const temp = currenciesTo[0]
+    currenciesTo[0] = currencyFrom
+    currencyFrom = temp
+    this.setState({ currencyFrom, currenciesTo })
+  }
 
   render() {
     return (
@@ -192,8 +197,8 @@ class CurrencyConverter extends React.Component<{}, State> {
           ))}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default CurrencyConverter;
+export default CurrencyConverter

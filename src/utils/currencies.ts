@@ -167,4 +167,4 @@ export const currencies: Record<string, string> = {
   ZMK: "Zambian Kwacha (pre-2013)",
   ZMW: "Zambian Kwacha",
   ZWL: "Zimbabwean Dollar",
-};
+}

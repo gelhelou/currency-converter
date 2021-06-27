@@ -1,6 +1,8 @@
+@import "theme";
+
 .currency-converter-conversion-result {
     margin-top: 10px;
-    font-size: large;
+    font-size: $large-font-size;
     font-weight: bold;
-    color: blueviolet;
+    color: $base-secondary-color;
 }

@@ -1,12 +1,12 @@
-import React from "react";
-import "../styles/ConvertButton.css";
+import React from "react"
+import "../styles/ConvertButton.scss"
 
 export interface Props {
-  convert: () => void;
+  convert: () => void
 }
 
 export const ConvertButton: React.FC<Props> = ({ convert }) => (
   <button className="currency-converter-convert-button" onClick={convert}>
     Convert
   </button>
-);
+)

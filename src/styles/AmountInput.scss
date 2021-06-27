@@ -1,0 +1,37 @@
+@import "theme";
+
+.currency-converter-amount-form {
+    width: 250px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+    label {
+        align-self: flex-start;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: $base-font-size;
+        color: $base-secondary-color;
+    }
+
+    &-input {
+        height: 35px;
+        border-radius: $base-border-radius;
+        border: none;
+        padding: 0 10px;
+        font-size: $base-font-size;
+
+        &:focus {
+            @include outline;
+        }
+    }
+}
+
+@media all and (max-device-width: 600px) {
+    .currency-converter-amount-form {
+        margin-right: 0;
+    }
+}
