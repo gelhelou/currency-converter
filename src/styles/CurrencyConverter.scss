@@ -109,13 +109,21 @@
   }
 }
 
-@media all and (max-device-width: 600px) {
+@media all and (max-device-width: 900px) {
   .currency-converter {
+    &-source {
+      flex-direction: column;
+    }
+
     &-target {
       &-main,
       &-other {
         flex-direction: column;
       }
+    }
+
+    &-amount-form {
+      margin: 0 0 20px;
     }
 
     &-add-button,

@@ -148,12 +148,14 @@ class CurrencyConverter extends React.Component<{}, State> {
               setFieldValue={this.setFieldValue}
               label="from"
             />
-            <img
-              src={swapIcon}
-              className="currency-converter-swap-icon"
-              onClick={this.swap}
-              alt="swap-icon"
-            />
+            <div className="currency-converter-swap">
+              <img
+                src={swapIcon}
+                className="currency-converter-swap-icon"
+                onClick={this.swap}
+                alt="swap-icon"
+              />
+            </div>
           </div>
           <div className="currency-converter-target">
             {this.state.currenciesTo.map((currency, i) => (
