@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Project Overview
+
+This is The Exchanger!\
+This tool helps you find exchange rates and do conversions from a base currency to many target currencies.\
+A date could be selected as well (going back to year `1999`) to do conversions based on past exchange rates.\
+Don't forget to use the arrows button to immediately swap base and target currencies to make your life easier!
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -18,6 +25,11 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `yarn test:coverage`
+
+Launches the test runner in non-interactive mode and outputs a summary of test coverage to the console.\
+Coverage output will be saved to the `coverage` directory at the root.
 
 ### `yarn build`
 
